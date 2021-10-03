@@ -1,16 +1,23 @@
 import { ThrowStmt } from '@angular/compiler';
-import { Component, Input, OnInit } from '@angular/core';
+import { Template } from '@angular/compiler/src/render3/r3_ast';
+import { ChangeDetectionStrategy, Component, ContentChildren, Input, OnInit, QueryList } from '@angular/core';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { TemplateHeaderDirective } from './template-header.directive';
 
 const constants = {
   PAGE_SIZE: 5,
+  TEMPLATE: {
+    header: "header",
+    body: "body",
+  }
 }
 
 
 @Component({
   selector: 'a-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  styleUrls: ['./table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent implements OnInit {
 
@@ -18,8 +25,16 @@ export class TableComponent implements OnInit {
   @Input() data: any[] = [];
   @Input() pageSize = constants.PAGE_SIZE;
 
+  // @ContentChildren(TemplateHeaderDirective, { read: TemplateHeaderDirective}) public templates: QueryList<TemplateHeaderDirective>;
+
+  @ContentChildren(TemplateHeaderDirective, {read: TemplateHeaderDirective}) templates: QueryList<TemplateHeaderDirective>;
+
   faChevronLeft = faChevronLeft;
   faChevronRight = faChevronRight;
+
+  public TEMPLATE = constants.TEMPLATE;
+
+  public example = ['header', 'body'];
 
   page = 0;
   items: any[] = [];
@@ -32,7 +47,9 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.initPagination();
-    console.log(this.page);
+    // this.templates.changes.subscribe(temp => {
+    //   console.log(temp);
+    // })
   }
 
   private initPagination(): void {

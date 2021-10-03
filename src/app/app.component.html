@@ -5,18 +5,18 @@
   [pageSize]="5"
   style="display: inline-block; width: 900px;"
   >
-  <ng-template template='header' let-columns>
-    <div class="columns" *ngFor='let col of cols'>
+  <ng-template [template-header]="'header'" let-columns>
+    <div class="column" *ngFor='let col of columns'>
       {{ col.colName }}
     </div>
   </ng-template>
-  
-  <ng-template template='body'>
-    <div class="row" *ngFor='let col of data.columns'>
-      {{ data.rowData[col.fieldName] }}
+  <ng-template [template-header]="'body'" let-rowData>
+    {{ rowData.columns.fieldName }}
+    <div class="row" *ngFor='let col of rowData.columns'>
+      {{ rowData.data[col.fieldName] }}
     </div>
   </ng-template>
-  
+
 
 </a-table>
 </div>

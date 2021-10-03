@@ -4,7 +4,7 @@
   align-items: center;
 }
 
-.table-container {
+:host ::ng-deep .table-container {
   height: auto;
   width: inherit;
   user-select: none;
