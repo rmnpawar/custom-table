@@ -1,5 +1,5 @@
 <div class="container">
-  <a-table
+  <a-table (filter)='log($event)'
   [cols]="cols"
   [data]="data"
   [pageSize]="5"
@@ -7,7 +7,7 @@
   >
   <ng-template [template-header]="'header'" let-columns>
     <div class="column" *ngFor='let col of columns'>
-      {{ col.colName }}
+      <table-header [column]='col'></table-header>
     </div>
   </ng-template>
   <ng-template [template-header]="'body'" let-rowData>

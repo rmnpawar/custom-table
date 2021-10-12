@@ -11,4 +11,8 @@ export class AppComponent {
   data = data;
 
   title = 'table';
+
+  log(event) {
+    console.log(event);
+  }
 }

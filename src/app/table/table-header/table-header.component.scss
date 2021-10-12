@@ -1,0 +1,11 @@
+th {
+  cursor: pointer;
+}
+
+.caret {
+  width: 0;
+  height: 0;
+  display: inline-block;
+  border: 5px solid transparent;
+  border-top-color: #a9a9a9;;
+}
