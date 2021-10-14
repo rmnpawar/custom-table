@@ -1,4 +1,5 @@
 import { ThrowStmt } from '@angular/compiler';
+import { CursorError } from '@angular/compiler/src/ml_parser/lexer';
 import { Template } from '@angular/compiler/src/render3/r3_ast';
 import { ChangeDetectionStrategy, Component, ContentChildren, Input, OnInit, QueryList } from '@angular/core';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
@@ -43,9 +44,13 @@ export class TableComponent implements OnInit {
     end: number
   }
 
+  filteredData: any[] = [];
+  appliedFilters: any[] = [];
+
   constructor() { }
 
   ngOnInit(): void {
+    this.filteredData = this.data;
     this.initPagination();
     // this.templates.changes.subscribe(temp => {
     //   console.log(temp);
@@ -57,8 +62,8 @@ export class TableComponent implements OnInit {
   }
 
   public get tableHeight() {
-    let columnHeight = 80;
-    let rowHeight = 80;
+    let columnHeight = 50;
+    let rowHeight = 40;
     let margin = 20;
 
     return {
@@ -67,7 +72,7 @@ export class TableComponent implements OnInit {
   }
 
   public get size() {
-    return this.data.length;
+    return this.filteredData.length;
   }
 
   public get totalPages() {
@@ -84,7 +89,7 @@ export class TableComponent implements OnInit {
 
     this.saveCalculatedPosition(startPosition, endPosition);
 
-    this.items = this.data.slice(startPosition, endPosition);
+    this.items = this.filteredData.slice(startPosition, endPosition);
   }
 
   private saveCalculatedPosition(start: number, end: number) {
@@ -107,5 +112,32 @@ export class TableComponent implements OnInit {
       this.page += 1;
       this.paginate(this.page, this.pageSize);
     }
+  }
+
+
+
+  // filtering logic
+  filter(currentValue: {fieldName: string, value: string}) {
+    this.filteredData = this.data;
+
+    let index = this.appliedFilters.map(filter => filter.fieldName).indexOf(currentValue.fieldName);
+
+    if (index > -1) {
+      this.appliedFilters[index] = currentValue;
+    } else {
+      console.log("else called");
+      this.appliedFilters.push(currentValue);
+    }
+
+    this.appliedFilters.forEach(filter => {
+      this.filterFromValue(filter, this.filteredData);
+    })
+    this.initPagination();
+  }
+
+  private filterFromValue(value: {fieldName: string, value: string}, data: any[]) {
+    this.filteredData = data.filter(item => {
+      return item[value.fieldName].includes(value.value);
+    });
   }
 }

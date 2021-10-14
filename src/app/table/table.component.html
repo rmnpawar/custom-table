@@ -1,4 +1,4 @@
-<div class="table-container">
+<!-- <div class="table-container">
   <div class="table" [ngStyle]='tableHeight'>
     <ng-container *ngFor='let tp of templates; index as t'>
       <ng-container [ngSwitch]='tp.templateName'>
@@ -33,15 +33,14 @@
       <fa-icon [icon]='faChevronRight'></fa-icon>
     </button>
   </div>
-</div>
-
+</div> -->
 
 <!-- <div class="table-container">
   <div class="table" [ngStyle]='tableHeight'>
     <div class="table-column">
       <div class="column">No.</div>
       <div class="column" *ngFor='let col of cols'>
-        {{ col.colName }}
+        <table-header [column]='col' (filter)='filter($event)'></table-header>
       </div>
     </div>
     <div class="table-row" *ngFor="let item of items; index as i">
@@ -66,3 +65,32 @@
     </button>
   </div>
 </div> -->
+
+<div class="table-container">
+  <table class="table table-striped" [ngStyle]="tableHeight">
+    <thead>
+      <th>No.</th>
+      <th  *ngFor="let col of cols">
+        <table-header [column]="col" (filter)="filter($event)"></table-header>
+      </th>
+    </thead>
+    <tbody>
+      <tr *ngFor='let item of items; index as i'>
+        <td>{{ i + 1 + pageData.start }}</td>
+        <td *ngFor='let col of cols'>{{ item[col.fieldName] }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="actions">
+    <div class="current">
+      {{ pageData.start + 1 }}<span class="separator">-</span
+      >{{ pageData.end }} of {{ size }}
+    </div>
+    <button (click)="prev()" class="left">
+      <fa-icon [icon]="faChevronLeft"></fa-icon>
+    </button>
+    <button (click)="next()" class="right">
+      <fa-icon [icon]="faChevronRight"></fa-icon>
+    </button>
+  </div>
+</div>

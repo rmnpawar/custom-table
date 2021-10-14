@@ -29,8 +29,8 @@ export const data = [
   {
     userId: 'rirani',
     jobTitleName: 'Developer',
-    firstName: 'Romin',
-    lastName: 'Irani',
+    firstName: 'Momin',
+    lastName: 'crani',
     preferredFullName: 'Romin Irani',
     employeeCode: 'E1',
     region: 'CA',
@@ -62,8 +62,8 @@ export const data = [
   {
     userId: 'rirani',
     jobTitleName: 'Developer',
-    firstName: 'Romin',
-    lastName: 'Irani',
+    firstName: 'tomin',
+    lastName: 'vrani',
     preferredFullName: 'Romin Irani',
     employeeCode: 'E1',
     region: 'CA',

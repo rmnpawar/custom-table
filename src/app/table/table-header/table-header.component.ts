@@ -7,7 +7,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class TableHeaderComponent implements OnInit {
 
+  filterObject: {fieldName?: string | undefined, value?: string | undefined};
+
   displayField: boolean = false;
+  text: string = "";
 
   @Input() column: {colName: string, fieldName: string};
   @Output('filter') filter = new EventEmitter();
@@ -18,13 +21,12 @@ export class TableHeaderComponent implements OnInit {
   }
 
   open() {
-    this.displayField = true;
-    console.log(this.column.fieldName)
+    this.displayField = !this.displayField;
   }
 
   valueChanged(value: string) {
-    console.log(value);
-    this.filter.emit(value);
+    this.filterObject = {fieldName: this.column.fieldName, value: value};
+    this.filter.emit(this.filterObject);
   }
 
 }
